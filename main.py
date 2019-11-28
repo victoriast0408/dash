@@ -59,7 +59,7 @@ values_fil2 = [paid_cash_sum_fil2, paid_card_sum_fil2, paid_customer_card_sum_fi
 
 app.layout = html.Div(children=[
     html.H1(children= 'Family Bakery'),
-    html.Div(children= 'Try this one first'),
+    html.H3(children= 'General Review'),
 
     dcc.Graph(
         id="line",
@@ -83,36 +83,45 @@ app.layout = html.Div(children=[
         },
     ),
 
-    dcc.Dropdown(
-        id='drop',
-        options=[{'label': i, 'value': i} for i in filials],
-        value= 'filials'
-    ),
+    html.H1(children= ''),
+    html.H3('Preferable payment method'),
+    dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
+        dcc.Tab(label='Filial 1', value='tab-1-example'),
+        dcc.Tab(label='Filial 2', value='tab-2-example'),
+    ]),
+    html.Div(id='tabs-content-example')
 
-    dcc.Graph(
-            id='pie',
-            figure= {
-                'data': [go.Pie(labels=labels, values=values)],
-            },
-            # Remove the "Produced with Plot.ly"
-            config={
-                "displaylogo": False,
-                'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
-                'displayModeBar': False        # change to True to display the modebar (plotly tools)
-            },
-        )
+
 ])
 
-# For dropdown
-@app.callback(
-    Output('pie', 'figure'),
-    [Input('drop', 'value')]
-)
-def update_graph(drop):
-    return{
-        'data':[go.Pie(labels=df2[drop], values=values_fil2)]
-    }
-####
+# For tabs
+@app.callback(Output('tabs-content-example', 'children'),
+              [Input('tabs-example', 'value')])
+def render_content(tab):
+    if tab == 'tab-1-example':
+        return html.Div([
+            #html.H3('Tab content 1'),
+            dcc.Graph(
+                id='graph-1-tabs',
+                figure={
+                   'data': [go.Pie(labels=labels, values=values)]
+                    
+                }
+            )
+        ])
+    elif tab == 'tab-2-example':
+        return html.Div([
+            #html.H3('Tab content 2'),
+            dcc.Graph(
+                id='graph-2-tabs',
+                figure={
+                     'data': [go.Pie(labels=labels, values=values_fil2)]
+                    
+                }
+            )
+        ])
+
+    ####
 
 if __name__ == '__main__':
     app.run_server()
