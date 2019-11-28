@@ -37,8 +37,6 @@ trace2 = go.Scatter(
 )
 ####
 
-filials = ['Filial 1', 'Filial 2']
-
 
 # Create labels and values for id=pie
 labels = ['Cash', 'Credit Card','Customer Card']
@@ -83,15 +81,17 @@ app.layout = html.Div(children=[
         },
     ),
 
-    html.H1(children= ''),
-    html.H3('Preferable payment method'),
+    html.H1(children= ''), # Empty div as a separator
+    
+    html.H3('Preferable payment method'),    # div with tabs
+    
     dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
         dcc.Tab(label='Filial 1', value='tab-1-example'),
         dcc.Tab(label='Filial 2', value='tab-2-example'),
     ]),
-    html.Div(id='tabs-content-example')
-
-
+    
+    #container for new pie according to the selected tab:
+    html.Div(id='tabs-content-example')        
 ])
 
 # For tabs
@@ -104,10 +104,8 @@ def render_content(tab):
             dcc.Graph(
                 id='graph-1-tabs',
                 figure={
-                   'data': [go.Pie(labels=labels, values=values)]
-                    
-                }
-            )
+                   'data': [go.Pie(labels=labels, values=values)]        
+                })
         ])
     elif tab == 'tab-2-example':
         return html.Div([
@@ -116,9 +114,7 @@ def render_content(tab):
                 id='graph-2-tabs',
                 figure={
                      'data': [go.Pie(labels=labels, values=values_fil2)]
-                    
-                }
-            )
+                    })
         ])
 
     ####
