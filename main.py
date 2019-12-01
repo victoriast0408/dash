@@ -12,6 +12,8 @@ import plotly.offline as pyo
 # read the file and replace the comma with dot in decimal
 df = pd.read_csv('BillsJan.csv', decimal=',')
 df2 = pd.read_csv('BillsJanFil2.csv', decimal=',')
+df3 = pd.read_csv('warengruppen_fil1.csv')
+df4 = pd.read_csv('warengruppen_fil2.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -53,11 +55,18 @@ paid_customer_card_sum_fil2 = df2['paid_customer_card'].sum()
 values_fil2 = [paid_cash_sum_fil2, paid_card_sum_fil2, paid_customer_card_sum_fil2]
 ####
 
+# Most popular 15 items
+df_most_pop_item_fil1 = df3.nlargest(15, ['anzahl'])
+most_pop_item_fil1 = df_most_pop_item_fil1['artikel']
+most_pop_item_count_fil1 = df_most_pop_item_fil1['anzahl']
 
-
-
+df_most_pop_item_fil2 = df4.nlargest(15, ['anzahl'])
+most_pop_item_fil2 = df_most_pop_item_fil2['artikel']
+most_pop_item_count_fil2 = df_most_pop_item_fil2['anzahl']
+####
 app.layout = html.Div(children=[
 
+    # Upper navigation bar
     dbc.NavbarSimple(
         children=[
             #dbc.NavItem(dbc.NavLink("Page 1", href="#")),
@@ -77,22 +86,19 @@ app.layout = html.Div(children=[
     ),
 
     # The second row with cards
-    dbc.Row(
-                [
+    dbc.Row([
                     dbc.Col(
                         dbc.Card([
-                            dbc.CardHeader(
-                                    html.H3("Today: ", className="card-title")
-                                    ),
+                            dbc.CardHeader(html.H3("Today: ", className="card-title")),
                             dbc.CardBody(
                                 [
-                                    html.H4('1 January 2020', className="text-center")
+                                    html.H4('30 January 2020', className="text-center")
                                     #dbc.CardLink("Card link", href="#"),
                                     #dbc.CardLink("External link", href="https://google.com"),
                                 ]
                             ),
                             #style={"width": "18rem"},
-                        ])
+                        ], className="card h-100")
                     ),
                     dbc.Col(dbc.Card([
                             dbc.CardHeader(
@@ -121,10 +127,10 @@ app.layout = html.Div(children=[
                         ),
                         #style={"width": "18rem", "height": "300px"},
                     ])),
-                ]),
+                ], className='pt-3'),
 
 
-    dbc.Row(html.H3(children= 'General Review')),
+    dbc.Row(html.H3('General Review', className="mx-auto pt-3")),
 
     dbc.Row(dbc.Col(html.Div(
     dcc.Graph(
@@ -151,16 +157,22 @@ app.layout = html.Div(children=[
 
     html.H1(children= ''), # Empty div as a separator
 
-    dbc.Row(html.H3('Preferable payment method')),    # div with tabs
+    dbc.Row(html.H3('Additional Information', className="mx-auto pb-3")),
 
+    dbc.Row([
+    dbc.Col(dbc.Card([
+        dbc.CardHeader(
     dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
         dcc.Tab(label='Branch 1', value='tab-1-example'),
         dcc.Tab(label='Branch 2', value='tab-2-example'),
-    ]),
-    
-    #container for new pie according to the selected tab:
-    html.Div(id='tabs-content-example')
+    ])),
+        dbc.CardBody([
+        #container for new pie according to the selected tab:
+        html.Div(id='tabs-content-example')])
+    ]))
 ])
+
+], className="container-fluid")
 
 # For tabs
 @app.callback(Output('tabs-content-example', 'children'),
@@ -168,21 +180,63 @@ app.layout = html.Div(children=[
 def render_content(tab):
     if tab == 'tab-1-example':
         return html.Div([
-            #html.H3('Tab content 1'),
             dcc.Graph(
                 id='graph-1-tabs',
                 figure={
-                   'data': [go.Pie(labels=labels, values=values)]        
-                })
+                   'data': [go.Pie(labels=labels, values=values)],
+                    'layout': {
+                    'title': 'Preferable payment method',
+                }},
+                # Remove the "Produced with Plot.ly"
+             config={
+            "displaylogo": False,
+            'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+            'displayModeBar': False        # change to True to display the modebar (plotly tools)
+        },),
+            # "15 most popular items" graph
+            dcc.Graph(
+                id='graph-1-1-tabs',
+                figure={
+                    'data': [go.Bar(x= most_pop_item_fil1, y=most_pop_item_count_fil1)],
+                    'layout':{
+                    'title': 'Most popular 15 items',
+                    'yaxis': {'title': 'Number of sold items'}}},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                }, )
         ])
     elif tab == 'tab-2-example':
         return html.Div([
-            #html.H3('Tab content 2'),
             dcc.Graph(
                 id='graph-2-tabs',
                 figure={
-                     'data': [go.Pie(labels=labels, values=values_fil2)]
-                    })
+                     'data': [go.Pie(labels=labels, values=values_fil2)],
+                     'layout': {
+                     'title': 'Preferable payment method'}},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                },
+            ),
+            # "15 most popular items" graph
+            dcc.Graph(
+                id='graph-2-2-tabs',
+                figure={
+                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2)],
+                    'layout': {
+                        'title': 'Most popular 15 items',
+                        'yaxis': {'title': 'Number of sold items'}}},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                }, )
         ])
 
 # For average bills tabs
@@ -191,13 +245,13 @@ def render_content(tab):
 def render_content_aver_bill(aver_bill_tab):
     if aver_bill_tab == 'tab-1-aver-bill':
         return html.Div([
-                html.H4("Average Bill: "),
-                html.H4(df['total'].mean())
+                html.H4("Average Bill pro Month: "),
+                html.H4(df['total'].mean().round(2))
             ], className="text-center")
     elif aver_bill_tab == 'tab-2-aver-bill':
         return html.Div([
-                html.H4("Average Bill: "),
-                html.H4(df2['total'].mean())
+                html.H4("Average Bill pro Month: "),
+                html.H4(df2['total'].mean().round(2))
             ], className="text-center")
 
 # For count bills tabs
@@ -206,12 +260,12 @@ def render_content_aver_bill(aver_bill_tab):
 def render_content_count_bill(count_bill_tab):
     if count_bill_tab == 'tab-1-count-bill':
         return html.Div([
-                html.H4("Number Bills: "),
+                html.H4("Number of Bills pro Month: "),
                 html.H4(df['bill_number'].count())
             ], className="text-center")
     elif count_bill_tab == 'tab-2-count-bill':
         return html.Div([
-                html.H4("Number Bills: "),
+                html.H4("Number of Bills pro Month: "),
                 html.H4(df2['bill_number'].count())
             ], className="text-center")
 
