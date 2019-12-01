@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 import dash
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import pandas as pd
 import numpy as np
@@ -12,7 +13,7 @@ import plotly.offline as pyo
 df = pd.read_csv('BillsJan.csv', decimal=',')
 df2 = pd.read_csv('BillsJanFil2.csv', decimal=',')
 
-app = dash.Dash()
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Group by days and store the unique values in 'day'
 day = df['date'].unique()
@@ -27,13 +28,13 @@ trace1 = go.Scatter(
     x = day,
     y = total_for_each_day,
     mode='lines+markers',
-    name='Filial 1'
+    name='Branch 1'
 )
 trace2 = go.Scatter(
     x = day_fil2,
     y = total_for_each_day_fil2,
     mode='lines+markers',
-    name='Filial 2'
+    name='Branch 2'
 )
 ####
 
@@ -56,9 +57,76 @@ values_fil2 = [paid_cash_sum_fil2, paid_card_sum_fil2, paid_customer_card_sum_fi
 
 
 app.layout = html.Div(children=[
-    html.H1(children= 'Family Bakery'),
-    html.H3(children= 'General Review'),
 
+    dbc.NavbarSimple(
+        children=[
+            #dbc.NavItem(dbc.NavLink("Page 1", href="#")),
+            dbc.DropdownMenu(
+                children=[
+                    dbc.DropdownMenuItem("More pages", header=True),
+                ],
+                nav=True,
+                in_navbar=True,
+                label="More",
+            ),
+        ],
+        brand="Family Bakery",
+        brand_href="#",
+        color="secondary",
+        dark=True,
+    ),
+
+    # The second row with cards
+    dbc.Row(
+                [
+                    dbc.Col(
+                        dbc.Card([
+                            dbc.CardHeader(
+                                    html.H3("Today: ", className="card-title")
+                                    ),
+                            dbc.CardBody(
+                                [
+                                    html.H4('1 January 2020', className="text-center")
+                                    #dbc.CardLink("Card link", href="#"),
+                                    #dbc.CardLink("External link", href="https://google.com"),
+                                ]
+                            ),
+                            #style={"width": "18rem"},
+                        ])
+                    ),
+                    dbc.Col(dbc.Card([
+                            dbc.CardHeader(
+                                    dcc.Tabs(id="tabs-aver-bill", value='tab-1-aver-bill', children=[
+                                        dcc.Tab(label='Branch 1', value='tab-1-aver-bill'),
+                                        dcc.Tab(label='Branch 2', value='tab-2-aver-bill'),
+                                    ]),
+                            ),
+                            dbc.CardBody(
+                                    # container for new data in tab:
+                                    html.Div(id='tabs-aver-bill-content')
+                            ),
+                            #style={"width": "18rem", "height":"300px"},
+                        ])),
+
+                    dbc.Col(dbc.Card([
+                        dbc.CardHeader(
+                                dcc.Tabs(id="tabs-count-bill", value='tab-1-count-bill', children=[
+                                    dcc.Tab(label='Branch 1', value='tab-1-count-bill'),
+                                    dcc.Tab(label='Branch 2', value='tab-2-count-bill'),
+                                ]),
+                            ),
+                        dbc.CardBody(
+                               # container for new data in tab:
+                                html.Div(id='tabs-count-bill-content'),
+                        ),
+                        #style={"width": "18rem", "height": "300px"},
+                    ])),
+                ]),
+
+
+    dbc.Row(html.H3(children= 'General Review')),
+
+    dbc.Row(dbc.Col(html.Div(
     dcc.Graph(
         id="line",
         figure= {
@@ -79,19 +147,19 @@ app.layout = html.Div(children=[
             'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
             'displayModeBar': False        # change to True to display the modebar (plotly tools)
         },
-    ),
+    )))),
 
     html.H1(children= ''), # Empty div as a separator
-    
-    html.H3('Preferable payment method'),    # div with tabs
-    
+
+    dbc.Row(html.H3('Preferable payment method')),    # div with tabs
+
     dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
-        dcc.Tab(label='Filial 1', value='tab-1-example'),
-        dcc.Tab(label='Filial 2', value='tab-2-example'),
+        dcc.Tab(label='Branch 1', value='tab-1-example'),
+        dcc.Tab(label='Branch 2', value='tab-2-example'),
     ]),
     
     #container for new pie according to the selected tab:
-    html.Div(id='tabs-content-example')        
+    html.Div(id='tabs-content-example')
 ])
 
 # For tabs
@@ -116,6 +184,36 @@ def render_content(tab):
                      'data': [go.Pie(labels=labels, values=values_fil2)]
                     })
         ])
+
+# For average bills tabs
+@app.callback(Output('tabs-aver-bill-content', 'children'),
+            [Input('tabs-aver-bill', 'value')])
+def render_content_aver_bill(aver_bill_tab):
+    if aver_bill_tab == 'tab-1-aver-bill':
+        return html.Div([
+                html.H4("Average Bill: "),
+                html.H4(df['total'].mean())
+            ], className="text-center")
+    elif aver_bill_tab == 'tab-2-aver-bill':
+        return html.Div([
+                html.H4("Average Bill: "),
+                html.H4(df2['total'].mean())
+            ], className="text-center")
+
+# For count bills tabs
+@app.callback(Output('tabs-count-bill-content', 'children'),
+            [Input('tabs-count-bill', 'value')])
+def render_content_count_bill(count_bill_tab):
+    if count_bill_tab == 'tab-1-count-bill':
+        return html.Div([
+                html.H4("Number Bills: "),
+                html.H4(df['bill_number'].count())
+            ], className="text-center")
+    elif count_bill_tab == 'tab-2-count-bill':
+        return html.Div([
+                html.H4("Number Bills: "),
+                html.H4(df2['bill_number'].count())
+            ], className="text-center")
 
     ####
 
