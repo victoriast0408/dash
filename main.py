@@ -310,6 +310,12 @@ def update_radio_item_output3(value):
 
     ####
 
+    
+# TO DO:
+# Navigation bar
+# Radio buttons margin
+# Graphs styling
+# Bar gradient color
 
 if __name__ == '__main__':
     app.run_server()
