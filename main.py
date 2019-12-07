@@ -55,6 +55,8 @@ paid_customer_card_sum_fil2 = df2['paid_customer_card'].sum()
 values_fil2 = [paid_cash_sum_fil2, paid_card_sum_fil2, paid_customer_card_sum_fil2]
 ####
 
+# Least popular
+
 # Most popular 15 items
 df_most_pop_item_fil1 = df3.nlargest(15, ['anzahl'])
 most_pop_item_fil1 = df_most_pop_item_fil1['artikel']
@@ -177,11 +179,18 @@ dcc.Graph(
             'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
             'displayModeBar': False        # change to True to display the modebar (plotly tools)
         },
-    )))),
+
+    )), className = "border-left-primary shadow")),
 
 html.H1(children= ''), # Empty div as a separator
 
-dbc.Row(html.H3('Additional Information', className="mx-auto pb-3")),
+dbc.Row(html.H3('Additional Information', className="mx-auto pb-3"),
+        className = "border-left-primary shadow"),
+
+html.H1(children= ''), # Empty div as a separator
+
+#dbc.Row(html.H3('Additional Information', className="mx-auto pb-3")),
+
 
 dbc.Row([
 dbc.Col(dbc.Card([
@@ -195,8 +204,8 @@ dbc.CardBody([
         html.Div(id='tabs-content-example')])
     ]))
 ])
+])
 
-], className="container-fluid")
 
 # For tabs
 @app.callback(Output('tabs-content-example', 'children'),
@@ -248,6 +257,15 @@ def render_content(tab):
                 },
             ),
             # "15 most popular items" graph
+            dcc.Slider(
+                id='my-slider',
+                min=df3['anzahl'].min(),
+                max=df3['anzahl'].max(),
+                step=0.5,
+                value=10,
+            ),
+            html.Div(id='slider-output-container'),
+
             dcc.Graph(
                 id='graph-2-2-tabs',
                 figure={
@@ -262,6 +280,7 @@ def render_content(tab):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 }, )
         ])
+
 
 # For average bills radio
 @app.callback(Output('aver_content', 'children'),
@@ -310,6 +329,12 @@ def update_radio_item_output3(value):
 
     ####
 
+
+# TO DO:
+# Navigation bar
+# Radio buttons margin
+# Graphs styling
+# Bar gradient color
 
 if __name__ == '__main__':
     app.run_server()
