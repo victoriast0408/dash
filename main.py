@@ -16,8 +16,8 @@ df3 = pd.read_csv('warengruppen_fil1.csv')
 df4 = pd.read_csv('warengruppen_fil2.csv')
 df5 = pd.read_csv('BillsFeb.csv', decimal=',')
 df6 = pd.read_csv('BillsFebFil2.csv', decimal=',')
-
-#To Do: df7 df8 feb fil1 and 2
+df7 = pd.read_csv('warengruppen_feb_fil1.csv')
+df8 = pd.read_csv('warengruppen_feb_fil2.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -310,7 +310,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-tabs',
                 figure={
-                    'data': [go.Pie(labels=labels, values=values)],
+                    'data': [go.Pie(labels=labels, values=values_feb)],
                     'layout': {
                         'title': 'Preferable payment method',
                     }},
@@ -324,7 +324,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-1-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_fil1, y=most_pop_item_count_fil1)],
+                    'data': [go.Bar(x=most_pop_item_fil1, y=most_pop_item_count_feb_fil1)],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
@@ -340,7 +340,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-tabs',
                 figure={
-                    'data': [go.Pie(labels=labels, values=values_fil2)],
+                    'data': [go.Pie(labels=labels, values=values_feb_fil2)],
                     'layout': {
                         'title': 'Preferable payment method'}},
                 # Remove the "Produced with Plot.ly"
@@ -354,7 +354,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-2-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2)],
+                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_feb_fil2)],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
