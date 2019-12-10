@@ -91,7 +91,12 @@ paid_customer_card_sum_feb_fil2 = df6['paid_customer_card'].sum()
 values_feb_fil2 = [paid_cash_sum_feb_fil2, paid_card_sum_feb_fil2, paid_customer_card_sum_feb_fil2]
 ####
 
+
 # Most popular 15 items for January:
+
+# Least popular
+
+# Most popular 15 items
 df_most_pop_item_fil1 = df3.nlargest(15, ['anzahl'])
 most_pop_item_fil1 = df_most_pop_item_fil1['artikel']
 most_pop_item_count_fil1 = df_most_pop_item_fil1['anzahl']
@@ -108,9 +113,10 @@ df_most_pop_item_feb_fil2 = df8.nlargest(15, ['anzahl'])
 most_pop_item_feb_fil2 = df_most_pop_item_feb_fil2['artikel']
 most_pop_item_count_feb_fil2 = df_most_pop_item_feb_fil2['anzahl']
 ####
+
 app.layout = html.Div(children=[
 
-    # Upper navigation bar
+# Upper navigation bar
     dbc.NavbarSimple(
         children=[
             html.Div("Select month: ", style={'color': 'white', 'fontSize': 11}),
@@ -135,13 +141,12 @@ app.layout = html.Div(children=[
         ],
         brand="Family Bakery",
         brand_href="#",
-        color="#293843",
+        color="secondary",
         dark=True,
     ),
 
     # The second row with cards
     dbc.Row([
-
             html.Div([
               html.Div(
                 html.Div(
@@ -151,9 +156,12 @@ app.layout = html.Div(children=[
                       html.Div("28 February", className="h5 mb-0 font-weight-bold text-gray-800"),
                     ], className="col mr-2"),
                     className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
-                    )], className="col-xl-3 col-md-3 mb-4 mt-3"),
+                    )], className="col-xl-3 col-md-3 mb-4"),
+
 
 ### Cards with Dropdowv
+
+### Radio buttons
             html.Div([
               html.Div(
                 html.Div(
@@ -170,7 +178,7 @@ app.layout = html.Div(children=[
                     ),
                       html.Div(id='aver_content', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
                         className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
-                        )], className="col-xl-3 col-md-3 mb-4 mt-3"),
+                        )], className="col-xl-3 col-md-3 mb-4"),
 
 
 ### Dropdown buttons 2
@@ -190,7 +198,7 @@ app.layout = html.Div(children=[
                         ),
                       html.Div(id='aver_content2', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
                         className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
-                        )], className="col-xl-3 col-md-3 mb-4 mt-3"),
+                        )], className="col-xl-3 col-md-3 mb-4"),
 
 
 ### Dropdown buttons 3
@@ -210,34 +218,43 @@ app.layout = html.Div(children=[
                         ),
                       html.Div(id='aver_content3', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
                         className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
-                        )], className="col-xl-3 col-md-3 mb-4 mt-3"),
+                        )], className="col-xl-3 col-md-3 mb-4"),
 ]),
 
 
 
-#dbc.Row(html.H3('General Review', className="mx-auto pt-3")),
+dbc.Row(html.H3('General Review', className="mx-auto pt-3")),
 
 dbc.Row(dbc.Col(html.Div(
     # container for new pie according to the selected tab:
     html.Div(id='line-content')))),
-#html.H1(children= ''), # Empty div as a separator
 
-#dbc.Row(html.H3('Additional Information', className="mx-auto pb-3")),
+html.H1(children= ''), # Empty div as a separator
+
+dbc.Row(html.H3('Additional Information', className="mx-auto pb-3"), className = "border-left-primary shadow"),
+
+html.H1(children= ''), # Empty div as a separator
+
 
 dbc.Row([
-dbc.Col(dbc.Card([
+    dbc.Col(dbc.Card([
         dbc.CardHeader(
-dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
-        dcc.Tab(label='Branch 1', value='tab-1-example'),
-        dcc.Tab(label='Branch 2', value='tab-2-example'),
-    ])),
-dbc.CardBody([
+        dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
+            dcc.Tab(label='Branch 1', value='tab-1-example'),
+            dcc.Tab(label='Branch 2', value='tab-2-example'),
+        ])),
+        dbc.CardBody([
         #container for new pie according to the selected tab:
         html.Div(id='tabs-content-example')])
     ]))
-]),
-], className="container-fluid bg-light")
 
+])
+
+
+
+
+
+], className="container-fluid bg-light")
 
 # For tabs
 @app.callback(Output('tabs-content-example', 'children'),
@@ -274,6 +291,7 @@ def render_content(tab, month_value):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 }, )
         ])
+        # the same but for the Branch 2
     elif tab == 'tab-2-example' and month_value == 'january':
         return html.Div([
             dcc.Graph(
@@ -304,7 +322,7 @@ def render_content(tab, month_value):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 }, )
         ])
-
+            # For February
     elif tab == 'tab-1-example' and month_value == 'february':
         return html.Div([
             dcc.Graph(
@@ -324,7 +342,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-1-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_fil1, y=most_pop_item_count_feb_fil1)],
+                    'data': [go.Bar(x=most_pop_item_feb_fil1, y=most_pop_item_count_feb_fil1)],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
@@ -335,6 +353,7 @@ def render_content(tab, month_value):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 }, )
         ])
+        # the same for the Branch 2
     elif tab == 'tab-2-example' and month_value == 'february':
         return html.Div([
             dcc.Graph(
@@ -354,7 +373,7 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-2-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_feb_fil2)],
+                    'data': [go.Bar(x=most_pop_item_feb_fil2, y=most_pop_item_count_feb_fil2)],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
@@ -497,7 +516,7 @@ def update_line_graph(month_value):
             )
             ])
 
-    
+
 # TO DO:
 # add .csv for Feb for Branch 2
 # Navigation bar
