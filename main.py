@@ -266,7 +266,9 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-tabs',
                 figure={
-                   'data': [go.Pie(labels=labels, values=values)],
+                   'data': [go.Pie(labels=labels, values=values,
+                                   marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
+                                   )],
                     'layout': {
                     'title': 'Preferable payment method',
                 }},
@@ -280,7 +282,10 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-1-tabs',
                 figure={
-                    'data': [go.Bar(x= most_pop_item_fil1, y=most_pop_item_count_fil1)],
+                    'data': [go.Bar(x= most_pop_item_fil1, y=most_pop_item_count_fil1,
+                                    marker={'color': most_pop_item_count_feb_fil1,
+                                            'colorscale': ['#f2fcfe', '#1c92d2']}
+                                    )],
                     'layout':{
                     'title': 'Most popular 15 items',
                     'yaxis': {'title': 'Number of sold items'}}},
@@ -297,7 +302,9 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-tabs',
                 figure={
-                     'data': [go.Pie(labels=labels, values=values_fil2)],
+                     'data': [go.Pie(labels=labels, values=values_fil2,
+                                     marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
+                                     )],
                      'layout': {
                      'title': 'Preferable payment method'}},
                 # Remove the "Produced with Plot.ly"
@@ -311,7 +318,10 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-2-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2)],
+                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2,
+                                    marker={'color': most_pop_item_count_feb_fil1,
+                                           'colorscale': ['#f2fcfe', '#1c92d2']}
+                                    )],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
@@ -328,7 +338,9 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-tabs',
                 figure={
-                    'data': [go.Pie(labels=labels, values=values_feb)],
+                    'data': [go.Pie(labels=labels, values=values_feb,
+                                    marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
+                                    )],
                     'layout': {
                         'title': 'Preferable payment method',
                     }},
@@ -342,7 +354,12 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-1-1-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_feb_fil1, y=most_pop_item_count_feb_fil1)],
+                    'data': [go.Bar(x=most_pop_item_feb_fil1, y=most_pop_item_count_feb_fil1,
+                                    marker={'color': most_pop_item_count_feb_fil1,
+                                            #'colorscale': 'ylorrd'}        --> standart colorscale
+                                            #'colorscale':[[0, 'green'], [0.5, 'red'], [1.0, 'rgb(0, 0, 255)']]}  --> differnet colors
+                                            'colorscale': ['#f2fcfe', '#1c92d2']}
+                                    )],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
@@ -359,7 +376,8 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-tabs',
                 figure={
-                    'data': [go.Pie(labels=labels, values=values_feb_fil2)],
+                    'data': [go.Pie(labels=labels, values=values_feb_fil2,
+                                    marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']})],
                     'layout': {
                         'title': 'Preferable payment method'}},
                 # Remove the "Produced with Plot.ly"
@@ -373,7 +391,10 @@ def render_content(tab, month_value):
             dcc.Graph(
                 id='graph-2-2-tabs',
                 figure={
-                    'data': [go.Bar(x=most_pop_item_feb_fil2, y=most_pop_item_count_feb_fil2)],
+                    'data': [go.Bar(x=most_pop_item_feb_fil2, y=most_pop_item_count_feb_fil2,
+                                    marker={'color': most_pop_item_count_feb_fil1,
+                                            'colorscale': ['#f2fcfe', '#1c92d2']}
+                                    )],
                     'layout': {
                         'title': 'Most popular 15 items',
                         'yaxis': {'title': 'Number of sold items'}}},
