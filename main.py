@@ -12,8 +12,8 @@ import plotly.offline as pyo
 # read the file and replace the comma with dot in decimal
 df = pd.read_csv('BillsJan.csv', decimal=',')
 df2 = pd.read_csv('BillsJanFil2.csv', decimal=',')
-df3 = pd.read_csv('warengruppen_fil1.csv')
-df4 = pd.read_csv('warengruppen_fil2.csv')
+df3 = pd.read_csv('warengruppen_jan_fil1.csv')
+df4 = pd.read_csv('warengruppen_jan_fil2.csv')
 df5 = pd.read_csv('BillsFeb.csv', decimal=',')
 df6 = pd.read_csv('BillsFebFil2.csv', decimal=',')
 df7 = pd.read_csv('warengruppen_feb_fil1.csv')
