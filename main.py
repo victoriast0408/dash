@@ -44,13 +44,14 @@ trace1 = go.Scatter(
     x = day,
     y = total_for_each_day,
     mode='lines+markers',
-    name='Branch 1'
+    name='Branch 1',
 )
 trace2 = go.Scatter(
     x = day_fil2,
     y = total_for_each_day_fil2,
     mode='lines+markers',
-    name='Branch 2'
+    name='Branch 2',
+    line = {'color': 'rgb(147, 112, 220)'}   # change the line colour
 )
 ####
 
@@ -65,7 +66,8 @@ trace4 = go.Scatter(
     x = day_feb_fil2,
     y = total_for_each_day_fil2_feb,
     mode='lines+markers',
-    name='Branch 2'
+    name='Branch 2',
+    line={'color': 'rgb(147, 112, 220)'}
 )
 ####
 
@@ -141,7 +143,7 @@ app.layout = html.Div(children=[
     className="mb-4"),
 
     # The second row with cards
-    # Dropdown 1
+    # Card 1
     dbc.Row([
             html.Div([
               html.Div(
@@ -172,9 +174,19 @@ app.layout = html.Div(children=[
                     )], className="col-xl-3 col-md-3 mb-4"),
 
 
-### Cards with Dropdown
+### Cards with Data
 
-### Dropdown 2
+### Card 2
+            html.Div([
+              html.Div(
+                html.Div(
+                  html.Div(
+                    html.Div([
+                      html.Div(id='aver_content2', className="h5 mb-0 mt-4 font-weight-bold text-gray-800")], className="col mr-2"),
+                        className="col mr-2"), className="card-body"), className="card border-left-info shadow h-100 py-2"
+                        )], className="col-xl-3 col-md-3 mb-4"),
+
+### Card 3
             html.Div([
               html.Div(
                 html.Div(
@@ -185,41 +197,12 @@ app.layout = html.Div(children=[
                         )], className="col-xl-3 col-md-3 mb-4"),
 
 
-### Dropdown 3
+### Card 4
             html.Div([
               html.Div(
                 html.Div(
                   html.Div(
                     html.Div([
-                        # dcc.Dropdown(
-                        #     id="dropdown-items2",
-                        #     options=[
-                        #         {'label': 'Branch 1', 'value': 'first'},
-                        #         {'label': 'Branch 2', 'value': 'second'},
-                        #     ],
-                        #     value='first',
-                        #     clearable=False,
-                        # ),
-                      html.Div(id='aver_content2', className="h5 mb-0 mt-4 font-weight-bold text-gray-800")], className="col mr-2"),
-                        className="col mr-2"), className="card-body"), className="card border-left-info shadow h-100 py-2"
-                        )], className="col-xl-3 col-md-3 mb-4"),
-
-
-### Dropdown 4
-            html.Div([
-              html.Div(
-                html.Div(
-                  html.Div(
-                    html.Div([
-                        # dcc.Dropdown(
-                        #     id="dropdown-items3",
-                        #     options=[
-                        #         {'label': 'Branch 1', 'value': 'first'},
-                        #         {'label': 'Branch 2', 'value': 'second'},
-                        #     ],
-                        #     value='first',
-                        #     clearable=False,
-                        # ),
                       html.Div(id='aver_content3', className="h5 mb-0 mt-4 font-weight-bold text-gray-800")], className="col mr-2"),
                         className="col mr-2"), className="card-body"), className="card border-left-warning shadow h-100 py-2"
                         )], className="col-xl-3 col-md-3 mb-4"),
@@ -228,7 +211,7 @@ app.layout = html.Div(children=[
 dbc.Row([
     dbc.Col(dbc.Card([
          dbc.CardHeader(
-        html.H6('General Review', className="mx-auto pb-3 mt-4 text-center font-weight-light card-header py-3")
+        html.H6('General Review', className="mx-auto pb-3 mt-4 text-center font-weight-light py-3")
          ),
         dbc.CardBody([
         html.Div(id='line-content')])
@@ -256,9 +239,6 @@ dbc.Row([
     ]), className="mt-4")
 
 ]),
-
-
-
 
 ], className="container-fluid bg-light")
 
