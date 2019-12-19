@@ -21,6 +21,10 @@ df8 = pd.read_csv('warengruppen_feb_fil2.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+#tabs_styles = {
+   # 'height': '44px'
+#}
+
 # Group by days and store the unique values in 'day' for January
 day = df['date'].unique()
 day_fil2 = df2['date'].unique()
@@ -119,16 +123,7 @@ app.layout = html.Div(children=[
 # Upper navigation bar
     dbc.NavbarSimple(
         children=[
-            html.Div("Select month: ", style={'color': 'white', 'fontSize': 11}),
-            dcc.Dropdown(
-                        id="dropdown-month",
-                        options=[
-                            {'label': 'January', 'value': 'january'},
-                            {'label': 'February', 'value': 'february'},
-                        ],
-                        value='january',
-                        clearable=False,
-                    ),
+
             #dbc.NavItem(dbc.NavLink("Page 1", href="#")),
             #dbc.DropdownMenu(
                 #children=[
@@ -143,125 +138,136 @@ app.layout = html.Div(children=[
         brand_href="#",
         color="secondary",
         dark=True,
-    ),
+    className="mb-4"),
 
     # The second row with cards
+    # Dropdown 1
     dbc.Row([
             html.Div([
               html.Div(
                 html.Div(
                   html.Div(
                     html.Div([
-                      html.Div("Today: ", className="text-xs font-weight-bold text-primary text-uppercase mb-1"),
-                      html.Div("28 February", className="h5 mb-0 font-weight-bold text-gray-800"),
+                        dcc.Dropdown(
+                            id="dropdown-month",
+                            options=[
+                                {'label': 'January', 'value': 'january'},
+                                {'label': 'February', 'value': 'february'},
+                            ],
+                            value='january',
+                            clearable=False,
+                        ),
+                        dcc.Dropdown(
+                            id="dropdown-items",
+                            options=[
+                                {'label': 'Branch 1', 'value': 'first'},
+                                {'label': 'Branch 2', 'value': 'second'},
+                            ],
+                            value='first',
+                            clearable=False,
+                            className="mt-3"
+                        ),
                     ], className="col mr-2"),
-                    className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
+                    className="col mr-2"), className="card-body"), className="card border-left-success shadow h-100 py-2"
                     )], className="col-xl-3 col-md-3 mb-4"),
 
 
-### Cards with Dropdowv
+### Cards with Dropdown
 
-### Radio buttons
+### Dropdown 2
             html.Div([
               html.Div(
                 html.Div(
                   html.Div(
-                    html.Div([
-                    dcc.Dropdown(
-                        id="dropdown-items",
-                        options=[
-                            {'label': 'Branch 1', 'value': 'first'},
-                            {'label': 'Branch 2', 'value': 'second'},
-                        ],
-                        value='first',
-                        clearable=False,
-                    ),
-                      html.Div(id='aver_content', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
+                    html.Div(
+                      html.Div(id='aver_content', className="h5 mb-0 mt-4 font-weight-bold text-gray-800"), className="col mr-2"),
                         className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
                         )], className="col-xl-3 col-md-3 mb-4"),
 
 
-### Dropdown buttons 2
+### Dropdown 3
             html.Div([
               html.Div(
                 html.Div(
                   html.Div(
                     html.Div([
-                        dcc.Dropdown(
-                            id="dropdown-items2",
-                            options=[
-                                {'label': 'Branch 1', 'value': 'first'},
-                                {'label': 'Branch 2', 'value': 'second'},
-                            ],
-                            value='first',
-                            clearable=False,
-                        ),
-                      html.Div(id='aver_content2', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
-                        className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
+                        # dcc.Dropdown(
+                        #     id="dropdown-items2",
+                        #     options=[
+                        #         {'label': 'Branch 1', 'value': 'first'},
+                        #         {'label': 'Branch 2', 'value': 'second'},
+                        #     ],
+                        #     value='first',
+                        #     clearable=False,
+                        # ),
+                      html.Div(id='aver_content2', className="h5 mb-0 mt-4 font-weight-bold text-gray-800")], className="col mr-2"),
+                        className="col mr-2"), className="card-body"), className="card border-left-info shadow h-100 py-2"
                         )], className="col-xl-3 col-md-3 mb-4"),
 
 
-### Dropdown buttons 3
+### Dropdown 4
             html.Div([
               html.Div(
                 html.Div(
                   html.Div(
                     html.Div([
-                        dcc.Dropdown(
-                            id="dropdown-items3",
-                            options=[
-                                {'label': 'Branch 1', 'value': 'first'},
-                                {'label': 'Branch 2', 'value': 'second'},
-                            ],
-                            value='first',
-                            clearable=False,
-                        ),
-                      html.Div(id='aver_content3', className="h5 mb-0 font-weight-bold text-gray-800")], className="col mr-2"),
-                        className="col mr-2"), className="card-body"), className="card border-left-primary shadow h-100 py-2"
+                        # dcc.Dropdown(
+                        #     id="dropdown-items3",
+                        #     options=[
+                        #         {'label': 'Branch 1', 'value': 'first'},
+                        #         {'label': 'Branch 2', 'value': 'second'},
+                        #     ],
+                        #     value='first',
+                        #     clearable=False,
+                        # ),
+                      html.Div(id='aver_content3', className="h5 mb-0 mt-4 font-weight-bold text-gray-800")], className="col mr-2"),
+                        className="col mr-2"), className="card-body"), className="card border-left-warning shadow h-100 py-2"
                         )], className="col-xl-3 col-md-3 mb-4"),
 ]),
 
+dbc.Row([
+    dbc.Col(dbc.Card([
+         dbc.CardHeader(
+        html.H6('General Review', className="mx-auto pb-3 mt-4 text-center font-weight-light card-header py-3")
+         ),
+        dbc.CardBody([
+        html.Div(id='line-content')])
+    ]), className="mt-4")
 
-
-dbc.Row(html.H3('General Review', className="mx-auto pt-3")),
-
-dbc.Row(dbc.Col(html.Div(
-    # container for new pie according to the selected tab:
-    html.Div(id='line-content')))),
-
-html.H1(children= ''), # Empty div as a separator
-
-dbc.Row(html.H3('Additional Information', className="mx-auto pb-3"), className = "border-left-primary shadow"),
-
-html.H1(children= ''), # Empty div as a separator
-
+]),
 
 dbc.Row([
     dbc.Col(dbc.Card([
         dbc.CardHeader(
-        dcc.Tabs(id="tabs-example", value='tab-1-example', children=[
-            dcc.Tab(label='Branch 1', value='tab-1-example'),
-            dcc.Tab(label='Branch 2', value='tab-2-example'),
-        ])),
+        html.H6('Preferable payment method', className="mx-auto pb-3 mt-4 text-center font-weight-light")
+    ),
         dbc.CardBody([
-        #container for new pie according to the selected tab:
-        html.Div(id='tabs-content-example')])
-    ]))
+        html.Div(id='content-pie')])
+    ]), className="mt-4")
 
-])
+]),
+dbc.Row([
+    dbc.Col(dbc.Card([
+        dbc.CardHeader(
+        html.H6('TOP 15 products', className="mx-auto pb-3 mt-4 text-center font-weight-light")
+    ),
+        dbc.CardBody([
+        html.Div(id='content-bar')])
+    ]), className="mt-4")
 
+]),
 
 
 
 
 ], className="container-fluid bg-light")
 
-# For tabs
-@app.callback(Output('tabs-content-example', 'children'),
-              [Input('tabs-example', 'value'),
+# For pie charts
+@app.callback(Output('content-pie', 'children'),
+              [Input('dropdown-items', 'value'),
                Input('dropdown-month', 'value')])
-def render_content(tab, month_value):
-    if tab == 'tab-1-example' and month_value == 'january':
+def render_content(value, month_value):
+    if value == "first" and month_value == 'january':
         return html.Div([
             dcc.Graph(
                 id='graph-1-tabs',
@@ -270,7 +276,7 @@ def render_content(tab, month_value):
                                    marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
                                    )],
                     'layout': {
-                    'title': 'Preferable payment method',
+                    #'title': 'Preferable payment method',
                 }},
                 # Remove the "Produced with Plot.ly"
              config={
@@ -278,26 +284,9 @@ def render_content(tab, month_value):
             'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
             'displayModeBar': False        # change to True to display the modebar (plotly tools)
         },),
-            # "15 most popular items" graph
-            dcc.Graph(
-                id='graph-1-1-tabs',
-                figure={
-                    'data': [go.Bar(x= most_pop_item_fil1, y=most_pop_item_count_fil1,
-                                    marker={'color': most_pop_item_count_feb_fil1,
-                                            'colorscale': ['#f2fcfe', '#1c92d2']}
-                                    )],
-                    'layout':{
-                    'title': 'Most popular 15 items',
-                    'yaxis': {'title': 'Number of sold items'}}},
-                # Remove the "Produced with Plot.ly"
-                config={
-                    "displaylogo": False,
-                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
-                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
-                }, )
         ])
         # the same but for the Branch 2
-    elif tab == 'tab-2-example' and month_value == 'january':
+    elif value == "second" and month_value == 'january':
         return html.Div([
             dcc.Graph(
                 id='graph-2-tabs',
@@ -306,7 +295,8 @@ def render_content(tab, month_value):
                                      marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
                                      )],
                      'layout': {
-                     'title': 'Preferable payment method'}},
+                     #'title': 'Preferable payment method'
+                         }},
                 # Remove the "Produced with Plot.ly"
                 config={
                     "displaylogo": False,
@@ -314,26 +304,9 @@ def render_content(tab, month_value):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 },
             ),
-            # "15 most popular items" graph
-            dcc.Graph(
-                id='graph-2-2-tabs',
-                figure={
-                    'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2,
-                                    marker={'color': most_pop_item_count_feb_fil1,
-                                           'colorscale': ['#f2fcfe', '#1c92d2']}
-                                    )],
-                    'layout': {
-                        'title': 'Most popular 15 items',
-                        'yaxis': {'title': 'Number of sold items'}}},
-                # Remove the "Produced with Plot.ly"
-                config={
-                    "displaylogo": False,
-                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
-                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
-                }, )
         ])
             # For February
-    elif tab == 'tab-1-example' and month_value == 'february':
+    elif value == "first" and month_value == 'february':
         return html.Div([
             dcc.Graph(
                 id='graph-1-tabs',
@@ -342,7 +315,7 @@ def render_content(tab, month_value):
                                     marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
                                     )],
                     'layout': {
-                        'title': 'Preferable payment method',
+                        #'title': 'Preferable payment method',
                     }},
                 # Remove the "Produced with Plot.ly"
                 config={
@@ -350,28 +323,9 @@ def render_content(tab, month_value):
                     'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 }, ),
-            # "15 most popular items" graph
-            dcc.Graph(
-                id='graph-1-1-tabs',
-                figure={
-                    'data': [go.Bar(x=most_pop_item_feb_fil1, y=most_pop_item_count_feb_fil1,
-                                    marker={'color': most_pop_item_count_feb_fil1,
-                                            #'colorscale': 'ylorrd'}        --> standart colorscale
-                                            #'colorscale':[[0, 'green'], [0.5, 'red'], [1.0, 'rgb(0, 0, 255)']]}  --> differnet colors
-                                            'colorscale': ['#f2fcfe', '#1c92d2']}
-                                    )],
-                    'layout': {
-                        'title': 'Most popular 15 items',
-                        'yaxis': {'title': 'Number of sold items'}}},
-                # Remove the "Produced with Plot.ly"
-                config={
-                    "displaylogo": False,
-                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
-                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
-                }, )
         ])
         # the same for the Branch 2
-    elif tab == 'tab-2-example' and month_value == 'february':
+    elif value == "second" and month_value == 'february':
         return html.Div([
             dcc.Graph(
                 id='graph-2-tabs',
@@ -379,7 +333,8 @@ def render_content(tab, month_value):
                     'data': [go.Pie(labels=labels, values=values_feb_fil2,
                                     marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']})],
                     'layout': {
-                        'title': 'Preferable payment method'}},
+                        #'title': 'Preferable payment method'
+                    }},
                 # Remove the "Produced with Plot.ly"
                 config={
                     "displaylogo": False,
@@ -387,24 +342,95 @@ def render_content(tab, month_value):
                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
                 },
             ),
-            # "15 most popular items" graph
-            dcc.Graph(
-                id='graph-2-2-tabs',
-                figure={
-                    'data': [go.Bar(x=most_pop_item_feb_fil2, y=most_pop_item_count_feb_fil2,
-                                    marker={'color': most_pop_item_count_feb_fil1,
-                                            'colorscale': ['#f2fcfe', '#1c92d2']}
-                                    )],
-                    'layout': {
-                        'title': 'Most popular 15 items',
-                        'yaxis': {'title': 'Number of sold items'}}},
-                # Remove the "Produced with Plot.ly"
-                config={
-                    "displaylogo": False,
-                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
-                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
-                }, )
         ])
+
+# For TOP 15 bars:
+@app.callback(Output('content-bar', 'children'),
+              [Input('dropdown-items', 'value'),
+               Input('dropdown-month', 'value')])
+def render_content(value, month_value):
+    if value == "first" and month_value == 'january':
+        return html.Div([
+            dcc.Graph(
+                id='graph-1-1-tabs',
+                 figure={
+                     'data': [go.Bar(x= most_pop_item_fil1, y=most_pop_item_count_fil1,
+                                     marker={'color': most_pop_item_count_feb_fil1,
+                                             'colorscale': ['#f2fcfe', '#1c92d2']}
+                                    )],
+                     'layout':{
+                     #'title': 'Most popular 15 items',
+                     'yaxis': {'title': 'Number of sold items'}}},
+                 # Remove the "Produced with Plot.ly"
+                 config={
+                     "displaylogo": False,
+                     'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                 }, )
+        ])
+        # the same but for the Branch 2
+    elif value == "second" and month_value == 'january':
+        return html.Div([
+             dcc.Graph(
+                 id='graph-2-2-tabs',
+                 figure={
+                     'data': [go.Bar(x=most_pop_item_fil2, y=most_pop_item_count_fil2,
+                                     marker={'color': most_pop_item_count_feb_fil1,
+                                            'colorscale': ['#f2fcfe', '#1c92d2']}
+                                     )],
+                     'layout': {
+                         #'title': 'Most popular 15 items',
+                         'yaxis': {'title': 'Number of sold items'}}},
+                 # Remove the "Produced with Plot.ly"
+                 config={
+                     "displaylogo": False,
+                     'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                 }, )
+        ])
+            # For February
+    elif value == "first" and month_value == 'february':
+        return html.Div([
+             dcc.Graph(
+                 id='graph-1-1-tabs',
+                 figure={
+                     'data': [go.Bar(x=most_pop_item_feb_fil1, y=most_pop_item_count_feb_fil1,
+                                     marker={'color': most_pop_item_count_feb_fil1,
+                                             #'colorscale': 'ylorrd'}        --> standart colorscale
+                                             #'colorscale':[[0, 'green'], [0.5, 'red'], [1.0, 'rgb(0, 0, 255)']]}  --> differnet colors
+                                             'colorscale': ['#f2fcfe', '#1c92d2']}
+                                     )],
+                     'layout': {
+                         #'title': 'Most popular 15 items',
+                         'yaxis': {'title': 'Number of sold items'}}},
+                 # Remove the "Produced with Plot.ly"
+                 config={
+                     "displaylogo": False,
+                     'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                 }, )
+        ])
+        # the same for the Branch 2
+    elif value == "second" and month_value == 'february':
+        return html.Div([
+             dcc.Graph(
+                 id='graph-2-2-tabs',
+                 figure={
+                    'data': [go.Bar(x=most_pop_item_feb_fil2, y=most_pop_item_count_feb_fil2,
+                                     marker={'color': most_pop_item_count_feb_fil1,
+                                             'colorscale': ['#f2fcfe', '#1c92d2']}
+                                     )],
+                     'layout': {
+                         #'title': 'Most popular 15 items',
+                         'yaxis': {'title': 'Number of sold items'}}},
+                 # Remove the "Produced with Plot.ly"
+                 config={
+                     "displaylogo": False,
+                     'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                     'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                 }, )
+        ])
+
 
 # For average bills dropdown
 @app.callback(Output('aver_content', 'children'),
@@ -434,7 +460,7 @@ def update_dropdown_item_output(value, month_value):
 
 # For number of bills dropdown
 @app.callback(Output('aver_content2', 'children'),
-            [Input('dropdown-items2', 'value'),
+            [Input('dropdown-items', 'value'),
              Input('dropdown-month', 'value')])
 def update_rdropdown_item_output2(value, month_value):
     if value == "first" and month_value == "january":
@@ -460,7 +486,7 @@ def update_rdropdown_item_output2(value, month_value):
 
 # For total pro month dropdown
 @app.callback(Output('aver_content3', 'children'),
-            [Input('dropdown-items3', 'value'),
+            [Input('dropdown-items', 'value'),
              Input('dropdown-month', 'value')])
 def update_dropdown_item_output3(value, month_value):
     if value == "first" and month_value == "january":
@@ -495,7 +521,7 @@ def update_line_graph(month_value):
                 figure= {
                     'data': [trace1, trace2],
                     'layout':{
-                    'title':'Total amount per day',
+                    #'title':'Total amount per day',
                     'showlegend': True,
                 #'xaxis': {'title': 'Days', 'titlefont':{
                                             #'family':'Arial, sans-serif',
