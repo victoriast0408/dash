@@ -123,9 +123,9 @@ most_pop_item_count_feb_fil2 = df_most_pop_item_feb_fil2['anzahl']
 app.layout = html.Div(children=[
 
 # Upper navigation bar
-    dbc.NavbarSimple(
+    dbc.Navbar(
         children=[
-
+            html.H4("Family Bakery", style={'color':'white'})
             #dbc.NavItem(dbc.NavLink("Page 1", href="#")),
             #dbc.DropdownMenu(
                 #children=[
@@ -136,11 +136,11 @@ app.layout = html.Div(children=[
                 #label="More",
             #),
         ],
-        brand="Family Bakery",
-        brand_href="#",
+        #brand="Family Bakery",
+        #brand_href="#",
         color="secondary",
         dark=True,
-    className="mb-4"),
+        className="mb-4"),
 
     # The second row with cards
     # Card 1
