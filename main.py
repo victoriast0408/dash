@@ -125,7 +125,7 @@ app.layout = html.Div(children=[
 # Upper navigation bar
     dbc.Navbar(
         children=[
-            html.H4("Family Bakery", style={'color':'white'})
+            html.H4("Family Bakery", style={'color':'white'}, className="font-weight-normal")
             #dbc.NavItem(dbc.NavLink("Page 1", href="#")),
             #dbc.DropdownMenu(
                 #children=[
