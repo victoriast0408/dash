@@ -120,6 +120,15 @@ most_pop_item_feb_fil2 = df_most_pop_item_feb_fil2['artikel']
 most_pop_item_count_feb_fil2 = df_most_pop_item_feb_fil2['anzahl']
 ####
 
+# User
+labels_user_fil1 = ['Anna', 'Marie','Alex']
+labels_user_fil2 = ['Andy', 'Jane', 'Mia']
+total_for_each_user_jan_fil1 = df.groupby('user')['total'].sum()
+total_for_each_user_jan_fil2 = df2.groupby('user')['total'].sum()
+total_for_each_user_feb_fil1 = df5.groupby('user')['total'].sum()
+total_for_each_user_feb_fil2 = df6.groupby('user')['total'].sum()
+####
+
 app.layout = html.Div(children=[
 
 # Upper navigation bar
@@ -226,9 +235,17 @@ dbc.Row([
     ),
         dbc.CardBody([
         html.Div(id='content-pie')])
+    ]), className="mt-4"),
+    dbc.Col(dbc.Card([
+        dbc.CardHeader(
+            html.H6('Sales by user', className="mx-auto pb-3 mt-4 text-center font-weight-light")
+        ),
+        dbc.CardBody([
+            html.Div(id='user-pie')])
     ]), className="mt-4")
 
 ]),
+
 dbc.Row([
     dbc.Col(dbc.Card([
         dbc.CardHeader(
@@ -242,7 +259,7 @@ dbc.Row([
 
 ], className="container-fluid bg-light")
 
-# For pie charts
+# For payment pie chart:
 @app.callback(Output('content-pie', 'children'),
               [Input('dropdown-items', 'value'),
                Input('dropdown-month', 'value')])
@@ -250,7 +267,7 @@ def render_content(value, month_value):
     if value == "first" and month_value == 'january':
         return html.Div([
             dcc.Graph(
-                id='graph-1-tabs',
+                id='pie_jan_1',
                 figure={
                    'data': [go.Pie(labels=labels, values=values,
                                    marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
@@ -269,7 +286,7 @@ def render_content(value, month_value):
     elif value == "second" and month_value == 'january':
         return html.Div([
             dcc.Graph(
-                id='graph-2-tabs',
+                id='pie_jan_2',
                 figure={
                      'data': [go.Pie(labels=labels, values=values_fil2,
                                      marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
@@ -289,7 +306,7 @@ def render_content(value, month_value):
     elif value == "first" and month_value == 'february':
         return html.Div([
             dcc.Graph(
-                id='graph-1-tabs',
+                id='pie_feb_1',
                 figure={
                     'data': [go.Pie(labels=labels, values=values_feb,
                                     marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
@@ -308,10 +325,92 @@ def render_content(value, month_value):
     elif value == "second" and month_value == 'february':
         return html.Div([
             dcc.Graph(
-                id='graph-2-tabs',
+                id='pie_feb_2',
                 figure={
                     'data': [go.Pie(labels=labels, values=values_feb_fil2,
                                     marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']})],
+                    'layout': {
+                        #'title': 'Preferable payment method'
+                    }},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                },
+            ),
+        ])
+
+# For user pie chart:
+@app.callback(Output('user-pie', 'children'),
+              [Input('dropdown-items', 'value'),
+               Input('dropdown-month', 'value')])
+def render_content(value, month_value):
+    if value == "first" and month_value == 'january':
+        return html.Div([
+            dcc.Graph(
+                id='pie_user_jan_1',
+                figure={
+                   'data': [go.Pie(labels=labels_user_fil1, values=total_for_each_user_jan_fil1,
+                                   marker={'colors': ['#1689C9', '#12477D', '#1cc88a']}
+                                   )],
+                    #'layout': {
+                    #'title': 'Preferable payment method',}
+                    },
+                # Remove the "Produced with Plot.ly"
+             config={
+            "displaylogo": False,
+            'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+            'displayModeBar': False        # change to True to display the modebar (plotly tools)
+        },),
+        ])
+        # the same but for the Branch 2
+    elif value == "second" and month_value == 'january':
+        return html.Div([
+            dcc.Graph(
+                id='pie_user_jan_2',
+                figure={
+                     'data': [go.Pie(labels=labels_user_fil2, values=total_for_each_user_jan_fil2,
+                                     marker={'colors': ['#1689C9', '#12477D', '#1cc88a']}
+                                     )],
+                     'layout': {
+                     #'title': 'Preferable payment method'
+                         }},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                },
+            ),
+        ])
+            # For February
+    elif value == "first" and month_value == 'february':
+        return html.Div([
+            dcc.Graph(
+                id='pie_user_feb_1',
+                figure={
+                    'data': [go.Pie(labels=labels_user_fil1, values=total_for_each_user_feb_fil1,
+                                    marker={'colors': ['#1689C9', '#12477D', '#1cc88a']}
+                                    )],
+                    'layout': {
+                        #'title': 'Preferable payment method',
+                    }},
+                # Remove the "Produced with Plot.ly"
+                config={
+                    "displaylogo": False,
+                    'modeBarButtonsToRemove': ['pan2d', 'lasso2d'],
+                    'displayModeBar': False  # change to True to display the modebar (plotly tools)
+                }, ),
+        ])
+        # the same for the Branch 2
+    elif value == "second" and month_value == 'february':
+        return html.Div([
+            dcc.Graph(
+                id='pie_user_feb_2',
+                figure={
+                    'data': [go.Pie(labels=labels_user_fil2, values=total_for_each_user_feb_fil2,
+                                    marker={'colors': ['#1689C9', '#12477D', '#1cc88a']})],
                     'layout': {
                         #'title': 'Preferable payment method'
                     }},
