@@ -511,7 +511,7 @@ def render_content(value, month_value):
         ])
 
 
-# For average bills dropdown
+# For average bills
 @app.callback(Output('aver_content', 'children'),
             [Input('dropdown-items', 'value'),
              Input('dropdown-month', 'value')])
@@ -537,7 +537,7 @@ def update_dropdown_item_output(value, month_value):
                html.H4(df6['total'].mean().round(2))
             ], className="text-center")
 
-# For number of bills dropdown
+# For number of bills
 @app.callback(Output('aver_content2', 'children'),
             [Input('dropdown-items', 'value'),
              Input('dropdown-month', 'value')])
@@ -563,7 +563,7 @@ def update_rdropdown_item_output2(value, month_value):
                          html.H4(df6['bill_number'].count())
                     ], className="text-center")
 
-# For total pro month dropdown
+# For total pro month
 @app.callback(Output('aver_content3', 'children'),
             [Input('dropdown-items', 'value'),
              Input('dropdown-month', 'value')])
@@ -571,22 +571,22 @@ def update_dropdown_item_output3(value, month_value):
     if value == "first" and month_value == "january":
         return html.Div([
             html.H4("Total amount: "),
-            html.H4(df['total'].sum())
+            html.H4(df['total'].sum().round(2))
         ], className="text-center")
     elif value == "second" and month_value == "january":
         return html.Div([
             html.H4("Total amount: "),
-            html.H4(df2['total'].sum())
+            html.H4(df2['total'].sum().round(2))
         ], className="text-center")
     elif value == "first" and month_value == "february":
         return html.Div([
             html.H4("Total amount: "),
-            html.H4(df5['total'].sum())
+            html.H4(df5['total'].sum().round(2))
         ], className="text-center")
     elif value == "second" and month_value == "february":
         return html.Div([
             html.H4("Total amount: "),
-            html.H4(df6['total'].sum())
+            html.H4(df6['total'].sum().round(2))
         ], className="text-center")
 
 # For line graph
