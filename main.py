@@ -255,9 +255,9 @@ def render_content(value, month_value):
                    'data': [go.Pie(labels=labels, values=values,
                                    marker={'colors': ['#0072BB', '#A0E6FE', '#9370DC']}
                                    )],
-                    'layout': {
-                    #'title': 'Preferable payment method',
-                }},
+                    #'layout': {
+                    #'title': 'Preferable payment method',}
+                    },
                 # Remove the "Produced with Plot.ly"
              config={
             "displaylogo": False,
