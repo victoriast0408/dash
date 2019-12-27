@@ -21,10 +21,6 @@ df8 = pd.read_csv('warengruppen_feb_fil2.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-#tabs_styles = {
-   # 'height': '44px'
-#}
-
 # Group by days and store the unique values in 'day' for January
 day = df['date'].unique()
 day_fil2 = df2['date'].unique()
@@ -121,8 +117,8 @@ most_pop_item_count_feb_fil2 = df_most_pop_item_feb_fil2['anzahl']
 ####
 
 # User
-labels_user_fil1 = ['Anna', 'Marie','Alex']
-labels_user_fil2 = ['Andy', 'Jane', 'Mia']
+labels_user_fil1 = df['user'].unique()                              #['Anna', 'Marie','Alex']
+labels_user_fil2 = df2['user'].unique()                             #['Andy', 'Jane', 'Mia']
 total_for_each_user_jan_fil1 = df.groupby('user')['total'].sum()
 total_for_each_user_jan_fil2 = df2.groupby('user')['total'].sum()
 total_for_each_user_feb_fil1 = df5.groupby('user')['total'].sum()
@@ -263,7 +259,7 @@ dbc.Row([
 @app.callback(Output('content-pie', 'children'),
               [Input('dropdown-items', 'value'),
                Input('dropdown-month', 'value')])
-def render_content(value, month_value):
+def render_content_user_pie(value, month_value):
     if value == "first" and month_value == 'january':
         return html.Div([
             dcc.Graph(
@@ -345,7 +341,7 @@ def render_content(value, month_value):
 @app.callback(Output('user-pie', 'children'),
               [Input('dropdown-items', 'value'),
                Input('dropdown-month', 'value')])
-def render_content(value, month_value):
+def render_content_pay_pie(value, month_value):
     if value == "first" and month_value == 'january':
         return html.Div([
             dcc.Graph(
@@ -427,7 +423,7 @@ def render_content(value, month_value):
 @app.callback(Output('content-bar', 'children'),
               [Input('dropdown-items', 'value'),
                Input('dropdown-month', 'value')])
-def render_content(value, month_value):
+def render_content_bar(value, month_value):
     if value == "first" and month_value == 'january':
         return html.Div([
             dcc.Graph(
